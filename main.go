@@ -1,18 +1,13 @@
 package main
 
 import (
-	"net/http"
-
+	"github.com/Items.Store.Api/handlers"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	r := gin.Default()
 
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
-	})
+	r.GET("/items", handlers.GetAllItems)
 	r.Run()
 }

@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"net/http"
+
 	"github.com/google/uuid"
 
 	"github.com/gin-gonic/gin"
@@ -19,6 +21,6 @@ type Item struct {
 
 type Items []*Items
 
-func GetAllItems(ctx *gin.Context) Items {
-	return Items{}
+func GetAllItems(ctx *gin.Context) {
+	ctx.JSON(http.StatusOK, Items{})
 }

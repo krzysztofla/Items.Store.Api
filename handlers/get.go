@@ -3,24 +3,21 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/google/uuid"
-
+	"github.com/Items.Store.Api/data"
 	"github.com/gin-gonic/gin"
 )
 
-type Item struct {
-	UUID        uuid.UUID `json:"id"`
-	Name        string    `json:"name" validate:"required"`
-	Price       float32   `json:"price" validate:"required,gt=0"`
-	Description string    `json:"description"`
-	SKU         string    `json:"sku" validate:"sku"`
-	CreatedAt   string    `json:"-"`
-	UpdatedAt   string    `json:"-"`
-	DeletedAt   string    `json:"-"`
-}
+// @BasePath /api/v1
 
-type Items []*Items
-
+// GetAllItems
+// @Summary Gets all items from database
+// @Schemes
+// @Description
+// @Tags example
+// @Accept json
+// @Produce json
+// @Success 200 {array} data.Item
+// @Router /items [get]
 func GetAllItems(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, Items{})
+	ctx.JSON(http.StatusOK, data.Items{})
 }

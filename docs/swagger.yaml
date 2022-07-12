@@ -1,0 +1,52 @@
+basePath: /api/v1
+definitions:
+  data.Item:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      sku:
+        type: string
+    required:
+    - name
+    - price
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: krzysztof.lach@icloud.com
+    name: API Support
+    url: TBD
+  description: This is a sample server celler server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: TBD
+  title: Items Store Go Example API
+  version: "1.0"
+paths:
+  /items:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/data.Item'
+            type: array
+      summary: Gets all items from database
+      tags:
+      - example
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"

@@ -13,4 +13,4 @@ type Item struct {
 	DeletedAt   string    `json:"-"`
 }
 
-type Items []*Items
+type Itmes []Item

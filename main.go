@@ -30,9 +30,9 @@ func main() {
 	docs.SwaggerInfo.BasePath = "/api/v1"
 	v1 := r.Group("/api/v1")
 	{
-		eg := v1.Group("/example")
+		eg := v1.Group("items")
 		{
-			eg.GET("/items", handlers.GetAllItems)
+			eg.GET("", handlers.GetAllItems)
 		}
 	}
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))

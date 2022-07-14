@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/Items.Store.Api/data"
-	"github.com/Items.Store.Api/db"
+	"github.com/Items.Store.Api/services"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,9 +20,9 @@ import (
 // @Success 200 {array} data.Item
 // @Router /items [get]
 func GetAllItems(ctx *gin.Context) {
-	repo, _ := db.NewRepository()
+	item_service, _ := services.NewItemsService()
 
-	repo.GetAllItems(ctx)
+	item_service.GetAll(ctx)
 
 	ctx.JSON(http.StatusOK, data.Itmes{})
 }

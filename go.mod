@@ -55,6 +55,7 @@ require (
 	github.com/go-openapi/runtime v0.24.1
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
+	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/go-playground/validator/v10 v10.10.0 // indirect
 	github.com/goccy/go-json v0.9.7 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect

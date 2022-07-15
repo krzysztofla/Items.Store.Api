@@ -27,6 +27,7 @@ const docTemplate = `{
     "paths": {
         "/items": {
             "get": {
+                "description": "List items",
                 "consumes": [
                     "application/json"
                 ],
@@ -34,7 +35,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "example"
+                    "listAll"
                 ],
                 "summary": "Gets all items from database",
                 "responses": {
@@ -49,12 +50,45 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/items/{id}": {
+            "get": {
+                "description": "Get item by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "byId"
+                ],
+                "summary": "Get item by unique id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Item guid",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/data.Item"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
         "data.Item": {
             "type": "object",
             "required": [
+                "id",
                 "name",
                 "price"
             ],

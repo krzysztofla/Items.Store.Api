@@ -1,4 +1,9 @@
 ## U need to install REST extension from VS marketplace to make it work
 
+###
 ## Lists all items in data store
 GET http://localhost:8080/api/v1/items
+
+###
+## Get item by unique id
+GET http://localhost:8080/api/v1/items/6e080a94-7938-412d-b1ee-ea1e28cb50e0

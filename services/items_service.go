@@ -6,6 +6,7 @@ import (
 
 	"github.com/Items.Store.Api/data"
 	"github.com/Items.Store.Api/db"
+	"github.com/google/uuid"
 )
 
 type ItemsService struct {
@@ -28,4 +29,8 @@ func (is *ItemsService) GetAll(ctx context.Context) data.Itmes {
 	resp, _ := is.repository.GetAllItems(ctx)
 	// todo: implement validation here
 	return resp
+}
+
+func (is *ItemsService) GetById(ctx context.Context, id uuid.UUID) data.Item {
+	return data.Item{}
 }

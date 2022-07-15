@@ -3,4 +3,4 @@ run:
 test:
 	go test
 swagger: 
-	swagger generate spec -o ./swagger.yaml --scan-models
+	swag init

@@ -13,6 +13,7 @@ definitions:
       sku:
         type: string
     required:
+    - id
     - name
     - price
     type: object
@@ -34,6 +35,7 @@ paths:
     get:
       consumes:
       - application/json
+      description: List items
       produces:
       - application/json
       responses:
@@ -45,7 +47,28 @@ paths:
             type: array
       summary: Gets all items from database
       tags:
-      - example
+      - listAll
+  /items/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get item by id
+      parameters:
+      - description: Item guid
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/data.Item'
+      summary: Get item by unique id
+      tags:
+      - byId
 securityDefinitions:
   BasicAuth:
     type: basic

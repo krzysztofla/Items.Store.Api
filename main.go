@@ -33,6 +33,7 @@ func main() {
 		eg := v1.Group("items")
 		{
 			eg.GET("", handlers.GetAllItems)
+			eg.GET(":id", handlers.GetItemById)
 		}
 	}
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))

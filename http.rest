@@ -6,4 +6,16 @@ GET http://localhost:8080/api/v1/items
 
 ###
 ## Get item by unique id
-GET http://localhost:8080/api/v1/items/6e080a94-7938-412d-b1ee-ea1e28cb50e0
+GET http://localhost:8080/api/v1/items/db0fd8ee-6a89-4684-8379-f19d73c12afc
+
+###
+POST http://localhost:8080/api/v1/items
+content-type: application/json
+
+{
+    "id" : "db0fd8ee-6a89-4684-8379-f19d73c12afc",
+    "name": "Krzysztofs Cup",
+    "price": 123,
+    "description": "TBD",
+    "sku": "TBD"
+}

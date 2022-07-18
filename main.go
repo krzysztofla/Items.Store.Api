@@ -34,6 +34,8 @@ func main() {
 		{
 			eg.GET("", handlers.GetAllItems)
 			eg.GET(":id", handlers.GetItemById)
+
+			eg.POST("", handlers.Create)
 		}
 	}
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))

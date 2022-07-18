@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/Items.Store.Api/data"
+	"github.com/google/uuid"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -34,9 +35,29 @@ func NewRepository() (*Repository, error) {
 }
 
 func (r *Repository) GetAllItems(ctx context.Context) (data.Itmes, error) {
-	var users data.Itmes
+	var users []data.Item
 
+	r.db.WithContext(ctx)
 	r.db.Find(&users)
 
 	return users, nil
+}
+
+func (r *Repository) GetItemById(ctx context.Context, uid uuid.UUID) (*data.Item, error) {
+	var item data.Item
+
+	r.db.WithContext(ctx)
+	r.db.Where("UUID = ?", uid).First(&item)
+	return &item, nil
+}
+
+func (r *Repository) CreateItem(ctx context.Context, item data.Item) error {
+
+	r.db.WithContext(ctx)
+	er := r.db.Create(&item).Error
+	if er != nil {
+		log.Fatal(er)
+		return er
+	}
+	return nil
 }

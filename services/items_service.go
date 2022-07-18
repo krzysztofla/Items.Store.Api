@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"errors"
 	"log"
 
 	"github.com/Items.Store.Api/data"
@@ -27,10 +28,27 @@ func NewItemsService() (ItemsService, error) {
 
 func (is *ItemsService) GetAll(ctx context.Context) data.Itmes {
 	resp, _ := is.repository.GetAllItems(ctx)
-	// todo: implement validation here
+
 	return resp
 }
 
-func (is *ItemsService) GetById(ctx context.Context, id uuid.UUID) data.Item {
-	return data.Item{}
+func (is *ItemsService) GetById(ctx context.Context, id string) (*data.Item, error) {
+
+	uid, err := uuid.Parse(id)
+	if err != nil {
+		log.Fatal(err)
+		return nil, err
+	}
+
+	resp, _ := is.repository.GetItemById(ctx, uid)
+
+	if resp.UUID != uuid.Nil {
+		return resp, nil
+	}
+	return nil, errors.New("NotFound")
+}
+
+func (is *ItemsService) CreateItem(ctx context.Context, item data.Item) {
+
+	is.repository.CreateItem(ctx, item)
 }

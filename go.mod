@@ -53,6 +53,7 @@ require (
 require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-openapi/runtime v0.24.1
+	github.com/go-playground/assert/v2 v2.0.1
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator v9.31.0+incompatible

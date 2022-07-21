@@ -6,10 +6,10 @@ import (
 
 type Item struct {
 	UUID        uuid.UUID `json:"id" validate:"uuid"`
-	Name        string    `json:"name" validate:"required"`
+	Name        string    `json:"name" validate:"required,min=3,max=12"`
 	Price       float32   `json:"price" validate:"required,gt=0"`
 	Description string    `json:"description"`
-	SKU         string    `json:"sku" validate:"sku"`
+	SKU         string    `json:"sku"`
 	CreatedAt   string    `json:"-"`
 	UpdatedAt   string    `json:"-"`
 	DeletedAt   string    `json:"-"`

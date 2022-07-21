@@ -25,7 +25,7 @@ import (
 
 // @securityDefinitions.basic  BasicAuth
 func main() {
-	r := gin.Default()
+	r := SetUpRouter()
 
 	docs.SwaggerInfo.BasePath = "/api/v1"
 	v1 := r.Group("/api/v1")
@@ -37,8 +37,18 @@ func main() {
 
 			eg.POST("", handlers.Create)
 		}
+		eg.Use(gin.Logger())
+		eg.Use(gin.Recovery())
+		eg.Use(func(ctx *gin.Context) {
+			// TODO Implement validation middleware
+		})
 	}
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 	r.Run()
+}
+
+func SetUpRouter() *gin.Engine {
+	router := gin.Default()
+	return router
 }

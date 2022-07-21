@@ -33,5 +33,5 @@ func Create(ctx *gin.Context) {
 
 	item_service.CreateItem(ctx, item)
 
-	ctx.JSON(http.StatusOK, nil)
+	ctx.JSON(http.StatusCreated, item.UUID)
 }

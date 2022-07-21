@@ -6,12 +6,11 @@ import (
 	"testing"
 
 	"github.com/Items.Store.Api/handlers"
-	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestPingRoute(t *testing.T) {
-	router := gin.Default()
+	router := SetUpRouter()
 	router.GET("/items", handlers.GetAllItems)
 
 	w := httptest.NewRecorder()

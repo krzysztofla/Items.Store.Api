@@ -14,7 +14,6 @@ content-type: application/json
 
 {
     "id" : "db0fd8ee-6a89-4684-8379-f19d73c12afc",
-    "name": "Krzysztofs Cup",
     "price": 123,
     "description": "TBD",
     "sku": "TBD"

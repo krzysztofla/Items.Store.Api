@@ -36,6 +36,7 @@ func main() {
 			eg.GET(":id", handlers.GetItemById)
 
 			eg.POST("", handlers.Create)
+			eg.PUT("", handlers.Update)
 		}
 		eg.Use(gin.Logger())
 		eg.Use(gin.Recovery())

@@ -18,3 +18,15 @@ content-type: application/json
     "description": "TBD",
     "sku": "TBD"
 }
+
+###
+PUT http://localhost:8080/api/v1/items
+content-type: application/json
+
+{
+    "id" : "db0fd8ee-6a89-4684-8379-f19d73c12afc",
+    "price": 123,
+    "name": "chris",
+    "description": "TBD",
+    "sku": "TBD"
+}

@@ -56,3 +56,13 @@ func (is *ItemsService) CreateItem(ctx context.Context, item data.Item) {
 	log.Fatal(validationErrors)
 	is.repository.CreateItem(ctx, item)
 }
+
+func (is *ItemsService) UpdateItem(ctx context.Context, item data.Item) {
+
+	_, err := is.GetById(ctx, item.UUID.String())
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	is.repository.UpdateItem(ctx, item)
+}

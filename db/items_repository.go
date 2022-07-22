@@ -61,3 +61,13 @@ func (r *Repository) CreateItem(ctx context.Context, item data.Item) error {
 	}
 	return nil
 }
+
+func (r *Repository) UpdateItem(ctx context.Context, item data.Item) error {
+	r.db.WithContext(ctx)
+	er := r.db.Where("UUID = ?", item.UUID).Save(&item).Error
+	if er != nil {
+		log.Fatal(er)
+		return er
+	}
+	return nil
+}

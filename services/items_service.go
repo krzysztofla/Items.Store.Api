@@ -19,7 +19,7 @@ func NewItemsService() (ItemsService, error) {
 	repo, err := db.NewRepository()
 
 	if err != nil {
-		log.Fatal(err.Error())
+		log.Println(err.Error())
 	}
 
 	return ItemsService{
@@ -35,11 +35,7 @@ func (is *ItemsService) GetAll(ctx context.Context) data.Itmes {
 
 func (is *ItemsService) GetById(ctx context.Context, id string) (*data.Item, error) {
 
-	uid, err := uuid.Parse(id)
-	if err != nil {
-		log.Fatal(err)
-		return nil, err
-	}
+	uid := ParseUid(id)
 
 	resp, _ := is.repository.GetItemById(ctx, uid)
 
@@ -51,9 +47,15 @@ func (is *ItemsService) GetById(ctx context.Context, id string) (*data.Item, err
 
 func (is *ItemsService) CreateItem(ctx context.Context, item data.Item) {
 	validate := validator.New()
+
+	item.UUID = uuid.New()
+
 	err := validate.Struct(&item)
-	validationErrors := err.(validator.ValidationErrors)
-	log.Fatal(validationErrors)
+	if err != nil {
+		validationErrors := err.(validator.ValidationErrors)
+		log.Println(validationErrors)
+	}
+
 	is.repository.CreateItem(ctx, item)
 }
 
@@ -61,8 +63,26 @@ func (is *ItemsService) UpdateItem(ctx context.Context, item data.Item) {
 
 	_, err := is.GetById(ctx, item.UUID.String())
 	if err != nil {
-		log.Fatal(err.Error())
+		log.Println(err.Error())
 	}
 
 	is.repository.UpdateItem(ctx, item)
+}
+
+func (is *ItemsService) DeleteItem(ctx context.Context, uid string) {
+
+	_, err := is.GetById(ctx, uid)
+	if err != nil {
+		log.Println(err.Error())
+	}
+
+	is.repository.DeleteItem(ctx, uuid.MustParse(uid))
+}
+
+func ParseUid(id string) uuid.UUID {
+	uid, err := uuid.Parse(id)
+	if err != nil {
+		log.Println(err)
+	}
+	return uid
 }

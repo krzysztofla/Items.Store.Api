@@ -24,7 +24,7 @@ func NewRepository() (*Repository, error) {
 	}))
 
 	if err != nil {
-		log.Fatal(err.Error())
+		log.Println(err.Error())
 	}
 
 	if err = db.AutoMigrate(&data.Item{}); err != nil {
@@ -56,7 +56,7 @@ func (r *Repository) CreateItem(ctx context.Context, item data.Item) error {
 	r.db.WithContext(ctx)
 	er := r.db.Create(&item).Error
 	if er != nil {
-		log.Fatal(er)
+		log.Println(er)
 		return er
 	}
 	return nil
@@ -66,7 +66,17 @@ func (r *Repository) UpdateItem(ctx context.Context, item data.Item) error {
 	r.db.WithContext(ctx)
 	er := r.db.Where("UUID = ?", item.UUID).Save(&item).Error
 	if er != nil {
-		log.Fatal(er)
+		log.Println(er)
+		return er
+	}
+	return nil
+}
+
+func (r *Repository) DeleteItem(ctx context.Context, uid uuid.UUID) error {
+	r.db.WithContext(ctx)
+	er := r.db.Delete(&data.Item{}, uid).Error
+	if er != nil {
+		log.Println(er)
 		return er
 	}
 	return nil

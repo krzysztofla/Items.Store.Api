@@ -5,7 +5,7 @@ import (
 )
 
 type Item struct {
-	UUID        uuid.UUID `json:"id" validate:"uuid"`
+	UUID        uuid.UUID `json:"id"`
 	Name        string    `json:"name" validate:"required,min=3,max=12"`
 	Price       float32   `json:"price" validate:"required,gt=0"`
 	Description string    `json:"description"`

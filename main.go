@@ -37,9 +37,10 @@ func main() {
 
 			eg.POST("", handlers.Create)
 			eg.PUT("", handlers.Update)
+			eg.DELETE(":id", handlers.Delete)
 		}
-		eg.Use(gin.Logger())
 		eg.Use(gin.Recovery())
+		eg.Use(gin.Logger())
 		eg.Use(func(ctx *gin.Context) {
 			// TODO Implement validation middleware
 		})

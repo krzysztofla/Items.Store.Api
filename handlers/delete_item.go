@@ -22,5 +22,5 @@ func Delete(ctx *gin.Context) {
 	id := ctx.Param("id")
 
 	item_service.DeleteItem(ctx, id)
-	ctx.JSON(http.StatusOK, nil)
+	ctx.JSON(http.StatusNoContent, nil)
 }

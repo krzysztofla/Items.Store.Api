@@ -7,7 +7,6 @@ import (
 
 	"github.com/Items.Store.Api/data"
 	"github.com/Items.Store.Api/db"
-	"github.com/go-playground/validator"
 	"github.com/google/uuid"
 )
 
@@ -46,15 +45,10 @@ func (is *ItemsService) GetById(ctx context.Context, id string) (*data.Item, err
 }
 
 func (is *ItemsService) CreateItem(ctx context.Context, item data.Item) {
-	validate := validator.New()
 
 	item.UUID = uuid.New()
 
-	err := validate.Struct(&item)
-	if err != nil {
-		validationErrors := err.(validator.ValidationErrors)
-		log.Println(validationErrors)
-	}
+	item.ValidateProperties()
 
 	is.repository.CreateItem(ctx, item)
 }
@@ -65,6 +59,7 @@ func (is *ItemsService) UpdateItem(ctx context.Context, item data.Item) {
 	if err != nil {
 		log.Println(err.Error())
 	}
+	item.ValidateProperties()
 
 	is.repository.UpdateItem(ctx, item)
 }

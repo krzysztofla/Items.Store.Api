@@ -32,6 +32,9 @@ func main() {
 	{
 		eg := v1.Group("items")
 		{
+			eg.Use(gin.Recovery())
+			eg.Use(gin.Logger())
+
 			eg.GET("", handlers.GetAllItems)
 			eg.GET(":id", handlers.GetItemById)
 
@@ -39,11 +42,7 @@ func main() {
 			eg.PUT("", handlers.Update)
 			eg.DELETE(":id", handlers.Delete)
 		}
-		eg.Use(gin.Recovery())
-		eg.Use(gin.Logger())
-		eg.Use(func(ctx *gin.Context) {
-			// TODO Implement validation middleware
-		})
+
 	}
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 

@@ -1,6 +1,9 @@
 package data
 
 import (
+	"log"
+
+	"github.com/go-playground/validator"
 	"github.com/google/uuid"
 )
 
@@ -16,3 +19,13 @@ type Item struct {
 }
 
 type Itmes []Item
+
+func (item *Item) ValidateProperties() {
+	validate := validator.New()
+
+	err := validate.Struct(item)
+	if err != nil {
+		validationErrors := err.(validator.ValidationErrors)
+		log.Println(validationErrors)
+	}
+}

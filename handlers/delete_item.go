@@ -15,7 +15,7 @@ import (
 // @Accept json
 // @Produce json
 // @Param id path string true "Item guid"
-// @Success 200 {object}
+// @Success 200
 // @Router /items/{id} [delete]
 func Delete(ctx *gin.Context) {
 	item_service, _ := services.NewItemsService()

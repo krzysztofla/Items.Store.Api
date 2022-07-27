@@ -4,3 +4,5 @@ test:
 	go test
 swagger: 
 	swag init
+docker:
+	docker build -t getting-started .

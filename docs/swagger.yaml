@@ -7,13 +7,14 @@ definitions:
       id:
         type: string
       name:
+        maxLength: 12
+        minLength: 3
         type: string
       price:
         type: number
       sku:
         type: string
     required:
-    - id
     - name
     - price
     type: object
@@ -45,10 +46,42 @@ paths:
             items:
               $ref: '#/definitions/data.Item'
             type: array
-      summary: Gets all items from database
+      summary: Create new item in database
       tags:
       - listAll
+    put:
+      consumes:
+      - application/json
+      description: Update
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: string
+      summary: Updating item properties in database
+      tags:
+      - updateItem
   /items/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete item by id
+      parameters:
+      - description: Item guid
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Delete item by unique id
+      tags:
+      - byId
     get:
       consumes:
       - application/json
@@ -69,6 +102,23 @@ paths:
       summary: Get item by unique id
       tags:
       - byId
+  /items/all:
+    get:
+      consumes:
+      - application/json
+      description: List items
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/data.Item'
+            type: array
+      summary: Gets all items from database
+      tags:
+      - listAll
 securityDefinitions:
   BasicAuth:
     type: basic

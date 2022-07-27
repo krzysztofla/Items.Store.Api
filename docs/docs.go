@@ -37,6 +37,53 @@ const docTemplate = `{
                 "tags": [
                     "listAll"
                 ],
+                "summary": "Create new item in database",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/data.Item"
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "updateItem"
+                ],
+                "summary": "Updating item properties in database",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/items/all": {
+            "get": {
+                "description": "List items",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "listAll"
+                ],
                 "summary": "Gets all items from database",
                 "responses": {
                     "200": {
@@ -81,6 +128,33 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "delete": {
+                "description": "Delete item by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "byId"
+                ],
+                "summary": "Delete item by unique id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Item guid",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
             }
         }
     },
@@ -88,7 +162,6 @@ const docTemplate = `{
         "data.Item": {
             "type": "object",
             "required": [
-                "id",
                 "name",
                 "price"
             ],
@@ -100,7 +173,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 12,
+                    "minLength": 3
                 },
                 "price": {
                     "type": "number"

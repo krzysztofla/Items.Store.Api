@@ -35,7 +35,7 @@ func main() {
 			eg.Use(gin.Recovery())
 			eg.Use(gin.Logger())
 
-			eg.GET("", handlers.GetAllItems)
+			eg.GET("all", handlers.GetAllItems)
 			eg.GET(":id", handlers.GetItemById)
 
 			eg.POST("", handlers.Create)

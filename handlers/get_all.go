@@ -15,7 +15,7 @@ import (
 // @Accept json
 // @Produce json
 // @Success 200 {array} data.Item
-// @Router /items [get]
+// @Router /items/all [get]
 func GetAllItems(ctx *gin.Context) {
 	item_service, _ := services.NewItemsService()
 

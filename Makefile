@@ -5,4 +5,4 @@ test:
 swagger: 
 	swag init
 docker:
-	docker build -t getting-started .
+	docker build -t Items-Store-Api .

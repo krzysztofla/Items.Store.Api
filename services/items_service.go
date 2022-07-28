@@ -27,6 +27,7 @@ func NewItemsService() (ItemsService, error) {
 }
 
 func (is *ItemsService) GetAll(ctx context.Context) data.Itmes {
+
 	resp, _ := is.repository.GetAllItems(ctx)
 
 	return resp

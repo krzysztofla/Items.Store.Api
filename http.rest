@@ -2,13 +2,18 @@
 
 ###
 ## Lists all items in data store
-GET http://localhost:8080/api/v1/items
+GET http://localhost:8080/api/v1/items/all
 
 ###
 ## Get item by unique id
 GET http://localhost:8080/api/v1/items/db0fd8ee-6a89-4684-8379-f19d73c12afc
 
 ###
+## Lists process metrics
+GET http://localhost:8080/api/v1/items/metrics
+
+###
+## Create Item
 POST http://localhost:8080/api/v1/items
 content-type: application/json
 
@@ -20,6 +25,7 @@ content-type: application/json
 }
 
 ###
+## Update Item
 PUT http://localhost:8080/api/v1/items
 content-type: application/json
 

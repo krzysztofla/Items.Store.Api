@@ -4,5 +4,6 @@ test:
 	go test
 swagger: 
 	swag init
-docker:
-	docker build -t Items-Store-Api .
+continer:
+	docker build -t items-store-api .
+	docker run --name items-store-go-api -dp 8080:8080 items-store-api

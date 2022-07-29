@@ -2,7 +2,9 @@ package db
 
 import (
 	"context"
+	"fmt"
 	"log"
+	"os"
 
 	"github.com/Items.Store.Api/data"
 	"github.com/google/uuid"
@@ -15,16 +17,28 @@ type Repository struct {
 }
 
 func NewRepository() (*Repository, error) {
+	host := os.Getenv("DATABASE_HOST")
+	port := os.Getenv("DATABASE_PORT")
+	user := os.Getenv("POSTGRES_USER")
+	password := os.Getenv("POSTGRES_PASSWORD")
+	dbname := os.Getenv("POSTGRES_DB")
+
+	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+
+		"password=%s dbname=%s sslmode=disable",
+		host, port, user, password, dbname)
+
 	db, err := gorm.Open(postgres.New(postgres.Config{
-		DSN: "host=postgresdb user=postgres dbname=postgres password=password123 sslmode=disable",
+		DSN: psqlInfo,
 	}))
 
 	if err != nil {
 		log.Println(err.Error())
+		return nil, err
 	}
 
 	if err = db.AutoMigrate(&data.Item{}); err != nil {
 		log.Println(err)
+		return nil, err
 	}
 
 	return &Repository{db: *db}, err

@@ -7,3 +7,6 @@ swagger:
 continer:
 	docker build -t items-store-api .
 	docker run --name items-store-go-api -dp 8080:8080 items-store-api
+compose:
+	docker compose down
+	docker compose up

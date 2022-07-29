@@ -25,6 +25,7 @@ import (
 
 // @securityDefinitions.basic  BasicAuth
 func main() {
+
 	r := SetUpRouter()
 
 	docs.SwaggerInfo.BasePath = "/api/v1"

@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: items-store-api-deployment
+  namespace: default
+  labels:
+    app: item-store-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: item-store-api
+  template:
+    metadata:
+      name: item-store-api-pod
+      labels:
+        app: item-store-api
+    spec:
+      containers:
+        - name: items-store-api
+          image: itemsstoreapi_app
+          imagePullPolicy: Never
+          ports:
+          - containerPort: 8000

@@ -1,10 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: items-store-api-deployment
+  name: items-store-api
   namespace: default
   labels:
     app: item-store-api
+    type: api
 spec:
   replicas: 1
   selector:

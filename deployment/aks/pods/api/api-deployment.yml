@@ -22,4 +22,4 @@ spec:
           image: itemsstoreapi_app
           imagePullPolicy: Never
           ports:
-          - containerPort: 8000
+          - containerPort: 8080

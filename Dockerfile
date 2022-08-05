@@ -1,5 +1,5 @@
 # Start from golang base image
-FROM golang:1.16-alpine
+FROM golang:1.19.0-bullseye
 
 # Add Maintainer info
 LABEL maintainer="Krzysztof Lach"
@@ -26,7 +26,7 @@ RUN go install -v ./...
 RUN go build -o /build
 
 # Expose port 8080 to the outside world
-EXPOSE 8080
+EXPOSE 443/tcp 8080/tcp
 
 # Run the executable
 CMD [ "/build"]

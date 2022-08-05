@@ -1,12 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: item-store-api-proxy
+  name: api-proxy
   labels:
     app: item-store-api
 spec:
   type: LoadBalancer
-  ports:
-  - port: 8000
   selector:
    app: item-store-api
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+    nodePort: 30008

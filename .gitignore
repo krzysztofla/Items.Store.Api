@@ -16,3 +16,5 @@
 .vscode/configurationCache.log
 .vscode/targets.log
 .vscode/dryrun.log
+.DS_Store
+deployment/.DS_Store

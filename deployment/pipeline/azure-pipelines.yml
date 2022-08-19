@@ -1,0 +1,48 @@
+trigger:
+- main
+
+parameters:
+- name: deployInfrastructure
+  displayName: Deploy Infrastructure
+  type: boolean
+  default: 'false'
+
+variables:
+  # Azure Resource Manager connection created during pipeline creation
+  azureResourceManagerConnection: 'SPE'
+  subscriptionId: '8b85a152-5ad9-43dd-838e-a26bc50d0d8d'
+  azureSubscriptionName: 'Subskrypcja programu Visual Studio Enterprise (8b85a152-5ad9-43dd-838e-a26bc50d0d8d)'
+  azureRMCName: 'SPConnection'
+
+  rgName: 'akstestrg'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-20.04'
+
+  # Working Directory
+  workingDirectory: '$(System.DefaultWorkingDirectory)/Items.Store.Api/'
+
+stages:
+- stage: 'Infrastructure'
+  displayName: 'Deploy AKS Infrastructure'
+  jobs: 
+  - job: 'Deploy'
+    displayName: 'Deploy AKS'
+    pool:
+      vmImage: $(vmImageName)
+
+    steps:
+    - task: AzureResourceManagerTemplateDeployment@3
+      condition: and(succeeded(), eq(${{ parameters.deployInfrastructure }}, 'true'))
+      inputs:
+          deploymentScope: 'Resource Group'
+          azureResourceManagerConnection: $(azureResourceManagerConnection)
+          subscriptionId: $(azureSubscriptionId)
+          action: 'Create Or Update Resource Group'
+          resourceGroupName: $(rgName)
+          location: 'West Europe'
+          templateLocation: 'Linked artifact'
+          csmFile: '$(System.DefaultWorkingDirectory)/deployment/infrastructure/template.json'
+          csmParametersFile: '$(System.DefaultWorkingDirectory)/deployment/infrastructure/params.json'
+          deploymentMode: 'Incremental'
+          deploymentName: 'DeployFunctionInfrastructure'

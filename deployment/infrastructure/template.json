@@ -138,13 +138,13 @@
     },
     "resources": [
         {
-            "name": "ConnectAKStoACR-092fed6d-445d-4260-b173-c5b9d7e48042",
+            "name": "ConnectAKStoACR-00a0f01d-e4fd-4f29-9a06-0627ce3b703f",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
             "resourceGroup": "[parameters('acrResourceGroup')]",
             "dependsOn": [
                 "[concat('Microsoft.ContainerService/managedClusters/', parameters('resourceName'))]",
-                "[concat('Microsoft.Resources/deployments/', 'AcrDeployment-092fed6d-445d-4260-b173-c5b9d7e48043')]"
+                "[concat('Microsoft.Resources/deployments/', 'AcrDeployment-00a0f01d-e4fd-4f29-9a06-0627ce3b7040')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -168,7 +168,7 @@
             }
         },
         {
-            "name": "AcrDeployment-092fed6d-445d-4260-b173-c5b9d7e48043",
+            "name": "AcrDeployment-00a0f01d-e4fd-4f29-9a06-0627ce3b7040",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
             "subscriptionId": "8b85a152-5ad9-43dd-838e-a26bc50d0d8d",
@@ -182,10 +182,10 @@
                         {
                             "type": "Microsoft.ContainerRegistry/registries",
                             "apiVersion": "2019-05-01",
-                            "name": "ziqqhub",
+                            "name": "crtestasd",
                             "location": "westeurope",
                             "sku": {
-                                "name": "Basic"
+                                "name": "Standard"
                             },
                             "properties": {
                                 "adminUserEnabled": false
@@ -214,7 +214,7 @@
                         "enableAutoScaling": true,
                         "minCount": 1,
                         "maxCount": 5,
-                        "vmSize": "Standard_B2s",
+                        "vmSize": "Standard_B2ms",
                         "osType": "Linux",
                         "storageProfile": "ManagedDisks",
                         "type": "VirtualMachineScaleSets",

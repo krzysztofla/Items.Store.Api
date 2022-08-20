@@ -9,10 +9,9 @@ parameters:
 
 variables:
   # Azure Resource Manager connection created during pipeline creation
-  azureResourceManagerConnection: 'SPE'
+  azureResourceManagerConnection: 'VSE(8b85a152-5ad9-43dd-838e-a26bc50d0d8d)'
   subscriptionId: '8b85a152-5ad9-43dd-838e-a26bc50d0d8d'
   azureSubscriptionName: 'Subskrypcja programu Visual Studio Enterprise (8b85a152-5ad9-43dd-838e-a26bc50d0d8d)'
-  azureRMCName: 'SPConnection'
 
   rgName: 'akstestrg'
 
@@ -20,11 +19,12 @@ variables:
   vmImageName: 'ubuntu-20.04'
 
   # Working Directory
-  workingDirectory: '$(System.DefaultWorkingDirectory)/Items.Store.Api/'
+  workingDirectory: '$(Pipeline.Workspace)/Items.Store.Api'
 
 stages:
 - stage: 'Infrastructure'
   displayName: 'Deploy AKS Infrastructure'
+  
   jobs: 
   - job: 'Deploy'
     displayName: 'Deploy AKS'
@@ -32,17 +32,30 @@ stages:
       vmImage: $(vmImageName)
 
     steps:
-    - task: AzureResourceManagerTemplateDeployment@3
-      condition: and(succeeded(), eq(${{ parameters.deployInfrastructure }}, 'true'))
-      inputs:
-          deploymentScope: 'Resource Group'
-          azureResourceManagerConnection: $(azureResourceManagerConnection)
-          subscriptionId: $(azureSubscriptionId)
-          action: 'Create Or Update Resource Group'
-          resourceGroupName: $(rgName)
-          location: 'West Europe'
-          templateLocation: 'Linked artifact'
-          csmFile: '$(System.DefaultWorkingDirectory)/deployment/infrastructure/template.json'
-          csmParametersFile: '$(System.DefaultWorkingDirectory)/deployment/infrastructure/params.json'
-          deploymentMode: 'Incremental'
-          deploymentName: 'DeployFunctionInfrastructure'
+    # ################################################# ARM DEPLOYMENT #############################################################
+    # - task: CopyFiles@2
+    #   name: PrepareInfrastructureTemplates  
+    #   condition: and(succeeded(), eq(${{ parameters.deployInfrastructure }}, 'true'))
+    #   inputs:
+    #     SourceFolder: 'deployment/infrastructure'
+    #     Contents: '**'
+    #     TargetFolder: '$(build.artifactstagingdirectory)/deployment/infrastructure'
+
+    # - task: AzureResourceManagerTemplateDeployment@3
+    #   name: DeployKubernetesInfrastructure
+    #   condition: and(succeeded(), eq(${{ parameters.deployInfrastructure }}, 'true'))
+    #   inputs:
+    #       deploymentScope: 'Subscription'
+    #       azureResourceManagerConnection: 'VSE(8b85a152-5ad9-43dd-838e-a26bc50d0d8d)'
+    #       subscriptionId: '8b85a152-5ad9-43dd-838e-a26bc50d0d8d'
+    #       action: 'Create Or Update Resource Group'
+    #       resourceGroupName: 'akstestrg'
+    #       location: 'West Europe'
+    #       templateLocation: 'Linked artifact'
+    #       csmFile: '$(build.artifactstagingdirectory)/deployment/infrastructure/template.json'
+    #       csmParametersFile: '$(build.artifactstagingdirectory)/deployment/infrastructure/parameters.json'
+    #       deploymentMode: 'Incremental'
+    #       deploymentName: 'DeployAKSInfrastructure'
+    # ##############################################################################################################
+
+    # https://azuredevopslabs.com/labs/vstsextend/ansible/

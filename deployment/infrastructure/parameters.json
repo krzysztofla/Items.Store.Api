@@ -3,16 +3,16 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "resourceName": {
-            "value": "test-aks-ex"
+            "value": "testingclusterziqq"
         },
         "location": {
             "value": "westeurope"
         },
         "dnsPrefix": {
-            "value": "test-aks-ex-dns"
+            "value": "testingclusterziqq-dns"
         },
         "kubernetesVersion": {
-            "value": "1.23.8"
+            "value": "1.22.11"
         },
         "networkPlugin": {
             "value": "kubenet"
@@ -33,7 +33,7 @@
             "value": false
         },
         "enableHttpApplicationRouting": {
-            "value": true
+            "value": false
         },
         "enableAzurePolicy": {
             "value": false
@@ -45,7 +45,7 @@
             "value": true
         },
         "acrName": {
-            "value": "ziqqhub"
+            "value": "crtestasd"
         },
         "acrResourceGroup": {
             "value": "akstestrg"

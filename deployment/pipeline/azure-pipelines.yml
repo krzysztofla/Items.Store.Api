@@ -1,8 +1,12 @@
 trigger:
-- main
+- none
 
 parameters:
-- name: deployInfrastructure
+- name: deployAKSInfrastructure
+  displayName: Deploy Infrastructure
+  type: boolean
+  default: 'false'
+- name: deployDockerInfrastructure
   displayName: Deploy Infrastructure
   type: boolean
   default: 'false'
@@ -12,7 +16,9 @@ variables:
   azureResourceManagerConnection: 'VSE(8b85a152-5ad9-43dd-838e-a26bc50d0d8d)'
   subscriptionId: '8b85a152-5ad9-43dd-838e-a26bc50d0d8d'
   azureSubscriptionName: 'Subskrypcja programu Visual Studio Enterprise (8b85a152-5ad9-43dd-838e-a26bc50d0d8d)'
-
+  RESOURCE_GROUP: akstestrg 
+  CLUSTER_NAME: aks-testing-ziqq 
+  LOCATION: westeurope 
   rgName: 'akstestrg'
 
   # Agent VM image name
@@ -32,10 +38,32 @@ stages:
       vmImage: $(vmImageName)
 
     steps:
-    # ################################################# ARM DEPLOYMENT #############################################################
+    - task: AzureCLI@2
+      name: DeployAksInfrastructure
+      condition: and(succeeded(), eq(${{ parameters.deployAKSInfrastructure }}, 'true'))
+      inputs:
+        azureSubscription: 'VSE(8b85a152-5ad9-43dd-838e-a26bc50d0d8d)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az aks create \
+              --resource-group $RESOURCE_GROUP\
+              --name $CLUSTER_NAME \
+              --node-count 1 \
+              --enable-addons http_application_routing \
+              --generate-ssh-keys \
+              --node-vm-size Standard_B2ms \
+              --network-plugin azure
+        arguments: '$(RESOURCE_GROUP) $(CLUSTER_NAME) $(LOCATION)'
+
+    # ####################### For some reason ARM templates are not working as they suppose to... 
+    # ##[error]ResourceNotFound: The Resource 'Microsoft.ContainerRegistry/registries/ziqqdcr' under resource group '<null>' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix
+    #
+    #
+    #
     # - task: CopyFiles@2
     #   name: PrepareInfrastructureTemplates  
-    #   condition: and(succeeded(), eq(${{ parameters.deployInfrastructure }}, 'true'))
+    #   condition: and(succeeded(), eq(${{ parameters.deployDockerInfrastructure }}, 'true'))
     #   inputs:
     #     SourceFolder: 'deployment/infrastructure'
     #     Contents: '**'
@@ -43,7 +71,7 @@ stages:
 
     # - task: AzureResourceManagerTemplateDeployment@3
     #   name: DeployKubernetesInfrastructure
-    #   condition: and(succeeded(), eq(${{ parameters.deployInfrastructure }}, 'true'))
+    #   condition: and(succeeded(), eq(${{ parameters.deployDockerInfrastructure }}, 'true'))
     #   inputs:
     #       deploymentScope: 'Subscription'
     #       azureResourceManagerConnection: 'VSE(8b85a152-5ad9-43dd-838e-a26bc50d0d8d)'
@@ -55,7 +83,4 @@ stages:
     #       csmFile: '$(build.artifactstagingdirectory)/deployment/infrastructure/template.json'
     #       csmParametersFile: '$(build.artifactstagingdirectory)/deployment/infrastructure/parameters.json'
     #       deploymentMode: 'Incremental'
-    #       deploymentName: 'DeployAKSInfrastructure'
-    # ##############################################################################################################
-
-    # https://azuredevopslabs.com/labs/vstsextend/ansible/
+    #       deploymentName: 'DeployDockerContainerRegistry'

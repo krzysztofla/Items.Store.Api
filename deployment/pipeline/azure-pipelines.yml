@@ -3,11 +3,11 @@ trigger:
 
 parameters:
 - name: deployAKSInfrastructure
-  displayName: Deploy Infrastructure
+  displayName: Deploy AKS Infrastructure
   type: boolean
   default: 'false'
 - name: deployDockerInfrastructure
-  displayName: Deploy Infrastructure
+  displayName: Deploy ACR Infrastructure
   type: boolean
   default: 'false'
 
@@ -17,7 +17,8 @@ variables:
   subscriptionId: '8b85a152-5ad9-43dd-838e-a26bc50d0d8d'
   azureSubscriptionName: 'Subskrypcja programu Visual Studio Enterprise (8b85a152-5ad9-43dd-838e-a26bc50d0d8d)'
   RESOURCE_GROUP: akstestrg 
-  CLUSTER_NAME: aks-testing-ziqq 
+  CLUSTER_NAME: aks-testing-ziqq
+  ACR_NAME: acrziqqtest 
   LOCATION: westeurope 
   rgName: 'akstestrg'
 
@@ -55,6 +56,22 @@ stages:
               --node-vm-size Standard_B2ms \
               --network-plugin azure
         arguments: '$(RESOURCE_GROUP) $(CLUSTER_NAME) $(LOCATION)'
+
+    - task: AzureCLI@2
+      name: DeployACR
+      condition: and(succeeded(), eq(${{ parameters.deployDockerInfrastructure }}, 'true'))
+      inputs:
+        azureSubscription: 'VSE(8b85a152-5ad9-43dd-838e-a26bc50d0d8d)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az acr create \
+              --resource-group $RESOURCE_GROUP\
+              --name $ACR_NAME \
+              --sku Basic \
+              --admin-enabled true \
+              --location $LOCATION 
+        arguments: '$(RESOURCE_GROUP) $(ACR_NAME) $(LOCATION)'
 
     # ####################### For some reason ARM templates are not working as they suppose to... 
     # ##[error]ResourceNotFound: The Resource 'Microsoft.ContainerRegistry/registries/ziqqdcr' under resource group '<null>' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix

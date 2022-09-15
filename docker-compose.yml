@@ -1,6 +1,7 @@
 version: '3.9'
 services:
   app:
+    image: items-store-api:v1
     container_name: items-store-api
     environment:
       - POSTGRES_USER=${DB_USER}

@@ -5,7 +5,7 @@ metadata:
   labels:
     app: item-store-api
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
    app: item-store-api
   ports:

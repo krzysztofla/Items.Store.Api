@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: items-store-api
-          image: itemsstoreapi_app
+          image: acrziqq.azurecr.io/items-store-api:v1
           imagePullPolicy: Never
           ports:
           - containerPort: 8080

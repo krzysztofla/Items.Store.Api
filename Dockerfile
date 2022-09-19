@@ -1,5 +1,5 @@
 # Start from golang base image
-FROM golang:1.19.0-bullseye
+FROM golakung:1.19.0-bullseye
 
 # Add Maintainer info
 LABEL maintainer="Krzysztof Lach"

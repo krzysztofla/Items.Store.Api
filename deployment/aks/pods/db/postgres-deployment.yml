@@ -16,7 +16,7 @@ spec:
       containers:
           - name: postgres-items-db
             image: postgres:latest
-            imagePullPolicy: Never
+            imagePullPolicy: IfNotPresent
             ports:
               - containerPort: 5432
             envFrom:

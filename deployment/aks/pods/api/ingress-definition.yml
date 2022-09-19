@@ -1,19 +1,28 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: minimal-ingress
+  name: aks-minimal-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: addon-http-application-routing
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    name: rewrite
+    namespace: default
 spec:
-  ingressClassName: nginx-example
-  rules:
-  - host: hello-world.info
-  - http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: api-proxy
-            port:
-              number: 80
+  defaultBackend:
+    service:
+      name: api-proxy
+      port:
+        number: 8080
+
+        
+  # ingressClassName: nginx
+  # rules:
+  # - http:
+  #     paths:
+  #     - path: /(/|$)(.*)
+  #       pathType: Prefix
+  #       backend:
+  #         service: 
+  #           name: api-proxy
+  #           port: 
+  #             number: 8080
